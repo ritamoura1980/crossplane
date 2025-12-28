@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: crossplane
+  namespace: crossplane-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: crossplane
+rules:
+- apiGroups:
+  - "*"
+  resources:
+  - "*"
+  verbs:
+  - "*"
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crossplane
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: crossplane
+subjects:
+- kind: ServiceAccount
+  name: crossplane
+  namespace: crossplane-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crossplane
+  namespace: crossplane-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crossplane
+  template:
+    metadata:
+      labels:
+        app: crossplane
+    spec:
+      serviceAccountName: crossplane
+      containers:
+      - name: crossplane
+        image: crossplane/crossplane:v1.18.0
+        args:
+        - core
+        - start
+        - --debug
+        ports:
+        - containerPort: 8080
+          name: metrics
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: LEADER_ELECTION
+          value: "true"

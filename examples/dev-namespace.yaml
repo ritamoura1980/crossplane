@@ -1,0 +1,11 @@
+---
+apiVersion: example.crossplane.io/v1alpha1
+kind: NamespaceClaim
+metadata:
+  name: dev-environment
+  namespace: default
+spec:
+  namespaceName: dev
+  labels:
+    environment: development
+    managed-by: crossplane

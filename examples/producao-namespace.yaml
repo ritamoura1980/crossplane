@@ -1,0 +1,12 @@
+---
+apiVersion: example.crossplane.io/v1alpha1
+kind: NamespaceClaim
+metadata:
+  name: producao-app
+  namespace: default
+spec:
+  namespaceName: producao
+  labels:
+    environment: production
+    team: backend
+    managed-by: crossplane
