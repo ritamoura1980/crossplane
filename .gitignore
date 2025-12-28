@@ -1,0 +1,35 @@
+# Secrets e Credenciais
+*.secret
+*.key
+*.pem
+*.crt
+*-secret.yaml
+*secrets*.yaml
+
+# Arquivos de configuração local
+.env
+.env.local
+kubeconfig
+.kube/
+
+# Backups
+*.backup
+*.bak
+
+# Logs
+*.log
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ArgoCD admin password (use kubectl para obter)
+argocd-password.txt

@@ -209,10 +209,11 @@ kubectl get events -n argocd --sort-by='.lastTimestamp'
 ## 📊 Dashboards e Visualização:
 
 ### Ver no ArgoCD UI:
-1. Acesse: https://localhost:8080
-2. Login: admin / FEO-87caPRNfLHHX
-3. Veja todas as Applications e seus status
-4. Clique em uma App para ver o grafo de recursos
+1. Obter senha: `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
+2. Acesse: https://localhost:8080
+3. Login: admin / [use senha do passo 1]
+4. Veja todas as Applications e seus status
+5. Clique em uma App para ver o grafo de recursos
 
 ### Port-forward para Nginx (testar localmente):
 ```powershell

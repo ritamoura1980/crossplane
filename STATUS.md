@@ -6,7 +6,7 @@
 - **Status**: Todos os pods rodando normalmente
 - **Acesso**: https://localhost:8080
 - **Usuário**: `admin`
-- **Senha**: `FEO-87caPRNfLHHX`
+- **Senha**: Use `kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d`
 
 ### 3. ✅ Estrutura do Projeto Criada
 ```

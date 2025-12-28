@@ -24,8 +24,8 @@ metadata:
   namespace: staging
 type: Opaque
 stringData:
-  API_KEY: "staging-api-key-12345"
-  DB_PASSWORD: "staging-password"
+  API_KEY: "CHANGE-ME"
+  DB_PASSWORD: "CHANGE-ME"
 ---
 apiVersion: apps/v1
 kind: Deployment
