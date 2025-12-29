@@ -1,0 +1,27 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-app-env
+  annotations:
+    policies.kyverno.io/title: Require APP_ENV in ConfigMap
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      ConfigMaps chamados app-config devem ter a variável APP_ENV.
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: check-app-env
+    match:
+      any:
+      - resources:
+          kinds:
+          - ConfigMap
+          names:
+          - app-config
+    validate:
+      message: "ConfigMap app-config deve conter APP_ENV"
+      pattern:
+        data:
+          APP_ENV: "?*"

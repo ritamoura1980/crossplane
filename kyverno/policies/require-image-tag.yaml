@@ -1,0 +1,30 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-image-tag
+  annotations:
+    policies.kyverno.io/title: Require Image Tag
+    policies.kyverno.io/category: Best Practices
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/description: >-
+      Imagens devem ter tag específica (não latest ou alpine).
+spec:
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: check-image-tag
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          - StatefulSet
+          - DaemonSet
+    validate:
+      message: "Imagem deve ter tag específica e versionada (ex: nginx:1.21.0, não nginx:alpine ou nginx:latest)"
+      pattern:
+        spec:
+          template:
+            spec:
+              containers:
+              - image: "!*:latest & !*:alpine & *:*"

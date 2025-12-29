@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - policies/require-resources.yaml
+  - policies/block-placeholder-secrets.yaml
+  - policies/require-image-tag.yaml
+  - policies/add-environment-labels.yaml
+  - policies/require-app-env.yaml
+  - policies/generate-network-policy.yaml

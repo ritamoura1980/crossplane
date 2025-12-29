@@ -1,0 +1,57 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-environment-labels
+  annotations:
+    policies.kyverno.io/title: Add Environment Labels
+    policies.kyverno.io/category: Other
+    policies.kyverno.io/description: >-
+      Adiciona automaticamente labels de ambiente baseado no namespace.
+spec:
+  background: true
+  rules:
+  - name: add-dev-labels
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          - Service
+          namespaces:
+          - dev
+    mutate:
+      patchStrategicMerge:
+        metadata:
+          labels:
+            +(environment): dev
+            +(managed-by): kyverno
+  - name: add-staging-labels
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          - Service
+          namespaces:
+          - staging
+    mutate:
+      patchStrategicMerge:
+        metadata:
+          labels:
+            +(environment): staging
+            +(managed-by): kyverno
+  - name: add-production-labels
+    match:
+      any:
+      - resources:
+          kinds:
+          - Deployment
+          - Service
+          namespaces:
+          - production
+    mutate:
+      patchStrategicMerge:
+        metadata:
+          labels:
+            +(environment): production
+            +(managed-by): kyverno

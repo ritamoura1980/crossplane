@@ -1,0 +1,68 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: generate-network-policy
+  annotations:
+    policies.kyverno.io/title: Generate Default Network Policy
+    policies.kyverno.io/category: Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/description: >-
+      Cria automaticamente uma NetworkPolicy default-deny para novos namespaces.
+spec:
+  background: true
+  rules:
+  - name: default-deny-all
+    match:
+      any:
+      - resources:
+          kinds:
+          - Namespace
+          names:
+          - dev
+          - staging
+          - production
+    generate:
+      synchronize: true
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      name: default-deny-all
+      namespace: "{{request.object.metadata.name}}"
+      data:
+        spec:
+          podSelector: {}
+          policyTypes:
+          - Ingress
+          - Egress
+  - name: allow-same-namespace
+    match:
+      any:
+      - resources:
+          kinds:
+          - Namespace
+          names:
+          - dev
+          - staging
+          - production
+    generate:
+      synchronize: true
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      name: allow-same-namespace
+      namespace: "{{request.object.metadata.name}}"
+      data:
+        spec:
+          podSelector: {}
+          policyTypes:
+          - Ingress
+          - Egress
+          ingress:
+          - from:
+            - podSelector: {}
+          egress:
+          - to:
+            - podSelector: {}
+          - to:
+            - namespaceSelector: {}
+            ports:
+            - protocol: UDP
+              port: 53
