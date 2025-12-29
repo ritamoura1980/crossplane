@@ -1,0 +1,63 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomize-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/SEU-USUARIO/crossplane.git
+    targetRevision: HEAD
+    path: kustomize/overlays/dev
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomize-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/SEU-USUARIO/crossplane.git
+    targetRevision: HEAD
+    path: kustomize/overlays/staging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: staging
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kustomize-production
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/SEU-USUARIO/crossplane.git
+    targetRevision: HEAD
+    path: kustomize/overlays/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
