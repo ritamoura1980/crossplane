@@ -5,6 +5,7 @@ namespace: dev
 
 resources:
 - ../../base
+- secrets.yaml
 
 nameSuffix: ""
 

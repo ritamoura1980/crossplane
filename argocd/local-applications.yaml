@@ -8,7 +8,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ritamoura1980/crossplane.git
-    targetRevision: HEAD
+    targetRevision: main
     path: kustomize/overlays/dev
   destination:
     server: https://kubernetes.default.svc
@@ -29,7 +29,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ritamoura1980/crossplane.git
-    targetRevision: HEAD
+    targetRevision: main
     path: kustomize/overlays/staging
   destination:
     server: https://kubernetes.default.svc
@@ -50,7 +50,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/ritamoura1980/crossplane.git
-    targetRevision: HEAD
+    targetRevision: main
     path: kustomize/overlays/production
   destination:
     server: https://kubernetes.default.svc

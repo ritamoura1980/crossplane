@@ -5,6 +5,7 @@ namespace: production
 
 resources:
 - ../../base
+- secrets.yaml
 
 nameSuffix: ""
 
