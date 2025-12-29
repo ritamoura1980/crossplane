@@ -1,0 +1,36 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: staging
+
+resources:
+- ../../base
+
+nameSuffix: ""
+
+labels:
+- pairs:
+    environment: staging
+
+configMapGenerator:
+- name: app-config
+  literals:
+  - APP_ENV=staging
+  - LOG_LEVEL=debug
+  - DATABASE_HOST=postgres-staging.svc.cluster.local
+
+# Os secrets devem ser gerenciados externamente
+# Veja secrets.yaml.example para um modelo
+# Para usar: copie secrets.yaml.example para secrets.yaml e ajuste os valores
+
+patches:
+- patch: |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nginx-demo
+    spec:
+      replicas: 2
+  target:
+    kind: Deployment
+    name: nginx-demo

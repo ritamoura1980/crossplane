@@ -5,6 +5,8 @@
 *.crt
 *-secret.yaml
 *secrets*.yaml
+secrets.yaml
+!secrets.yaml.example
 
 # Arquivos de configuração local
 .env
